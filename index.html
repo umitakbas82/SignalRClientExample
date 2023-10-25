@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR</title>
+    <!-- <script src="~/lib/signalr/signalr.js"></script> -->
+    <!-- <script src="code.jquery.com_jquery-3.7.1.min.js"></script> -->
+    <script>
+        $(document).ready(()=>{
+        const connection =new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:5001/myhub").build();
+
+        connection.start();
+
+        $("btnSend").click(()=>{
+            let message=$("#txtMessage").val();
+            connection.invoke("SendMessageAsync",message).catch(error=>console.log("Hata"));
+        })
+        })
+    </script>
+</head>
+<body>
+    <input type="text" id="txtMessage">
+    <button id="btnSend">Send</button>
+</body>
+</html>
