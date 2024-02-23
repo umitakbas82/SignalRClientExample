@@ -33,12 +33,14 @@
             });
             $("#btnGirisYap").click(() => {
                 const nickName = $("#txtNickName").val();
-                connection.invoke("GetNickName", nickName).catch(error => console.log(error), console.log("Btn giriş", nickName))
+                connection.invoke("GetNickName", nickName).catch(error => console.log(error), console.log("Btn giriş", nickName));
+                $(".disabled").removeAttr("disabled");
             });
 
-            console.log("Client Mesaj")
+            
             connection.on("clientJoined", nickName => {
                 $("#clientDurumMesajları").html(`${nickName} giriş yaptı`);
+                
                 $("#clientDurumMesajları").fadeIn(2000, () => {
                     setTimeout(() => {
                         $("#clientDurumMesajları").fadeOut(2000)
