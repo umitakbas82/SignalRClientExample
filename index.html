@@ -21,70 +21,88 @@
         $(document).ready(() => {
             const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/chathub").build();
             connection.start();
+            console.log("CONNECTION START")
 
             $(".disabled").attr("disabled", "disabled");
-            $(".users").click()(function () {
-                (".users").each((index, item) => {
+
+            $(".users").click(function () {
+                $(".users").each((index, item) => {
                     item.classList.remove("active");
                 });
+                $(this).addClass("active");
+            });
+            $("#btnGirisYap").click(() => {
+                const nickName = $("#txtNickName").val();
+                connection.invoke("GetNickName", nickName).catch(error => console.log(error), console.log("Btn giriş", nickName))
+            });
 
-                $("#btnGirisYap").click(() => {
-                    const nickName = $("#txtNickName").val();
-                    connection.invoke("GetNickName", nickName).cath(error => console.log(error))
-                })
-            })
-
+            console.log("Client Mesaj")
             connection.on("clientJoined", nickName => {
-
+                $("#clientDurumMesajları").html(`${nickName} giriş yaptı`);
+                $("#clientDurumMesajları").fadeIn(2000, () => {
+                    setTimeout(() => {
+                        $("#clientDurumMesajları").fadeOut(2000)
+                    })
+                    
+                });
             })
+           
         })   
     </script>
 </head>
 
 <body>
     <div class="container mt-5">
-    <div class="row ">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+        <div class="row ">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
 
-            <div class="row">
-                <!-- Left Menu -->
-                <div class="col-md-3">
-                    <!-- Rooms -->
-                    <input class="form-control form-control-lg disabled" type="text" placeholder="ChatRoomName">
-                    <button type="button" class="btn btn-info rightButton disabled">Create Chat Room</button>
-                    <br><br><br>
-                    <select size="5" style="width: 100%;" class="form-select disabled" multiple>
-                    <option value="1">Rooms</option>
-                </select>
-                <button type="button", class="btn btn-primary rightButton disabled">Enter Rooms</button>
-                <br><br><br>
-                <div class="list-group">
-                    <a href="" class="list-group-item list-group-item-action users" aria-current="true">Cras justo odio</a>
-                </div>
-                </div>
-                <!-- Messages -->
-                <div class="col-md-6">
-                    <textarea class="form-control" style="margin-top: 5px;" placeholder="Messsage.." rows="3"></textarea>
-                    <button type="button" class="btn btn-light rightButton" id="btnGonder">Send</button>
-                    <br><br><br>
-                    <div class="list-group">
-                        <a class="list-group-item list-group-item-action " aria-current="true">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">John</h5>
-                                <h5 class="mb-1">Tedy</h5>
-                            </div>
-                            <p class="mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, modi necessitatibus ut deleniti non error?</p>
-                            <small>Lorem ipsum dolor sit amet.</small>
-                        </a>
+                <div class="row">
+                    <!-- Left Menu -->
+                    <div class="col-md-3">
+                        <!-- Rooms -->
+                        <input class="form-control form-control-lg disabled" type="text" placeholder="ChatRoomName">
+                        <button type="button" class="btn btn-info rightButton disabled">Create Chat Room</button>
+                        <br><br><br>
+                        <select size="5" style="width: 100%;" class="form-select disabled" multiple>
+                            <option value="1">Rooms</option>
+                        </select>
+                        <button type="button" , class="btn btn-primary rightButton disabled">Enter Rooms</button>
+                        <br><br><br>
+                        <div class="list-group">
+                            <a href="" class="list-group-item list-group-item-action users" aria-current="true">Cras
+                                justo odio</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <input class="form-control form-control-lg" type="text" placeholder="Nick" id="txtNickName">
-                    <button type="button" class="btn btn-success leftButton" id="btnGirisYap">Login</button>
+
+                    <!-- Messages -->
+                    <div class="col-md-6">
+                        <div class="alert alert-success" id="clientDurumMesajları" style="display: none;">
+
+                        </div>
+                        <textarea class="form-control" style="margin-top: 5px;" placeholder="Messsage.."
+                            rows="3"></textarea>
+                        <button type="button" class="btn btn-light rightButton" id="btnGonder">Send</button>
+                        <br><br><br>
+                        <div class="list-group">
+                            <a class="list-group-item list-group-item-action " aria-current="true">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">John</h5>
+                                    <h5 class="mb-1">Tedy</h5>
+                                </div>
+                                <p class="mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, modi
+                                    necessitatibus ut deleniti non error?</p>
+                                <small>Lorem ipsum dolor sit amet.</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-lg" type="text" placeholder="Nick" id="txtNickName">
+                        <button type="button" class="btn btn-success leftButton" id="btnGirisYap">Login</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 </html>
