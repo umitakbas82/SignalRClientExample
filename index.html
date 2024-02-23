@@ -28,8 +28,8 @@
                     item.classList.remove("active");
                 });
 
-                $("#btnLogin").click(() => {
-                    const nickName = $("#txtNickname").val();
+                $("#btnGirisYap").click(() => {
+                    const nickName = $("#txtNickName").val();
                     connection.invoke("GetNickName", nickName).cath(error => console.log(error))
                 })
             })
@@ -42,7 +42,8 @@
 </head>
 
 <body>
-    <div class="row">
+    <div class="container mt-5">
+    <div class="row ">
         <div class="col-md-1"></div>
         <div class="col-md-10">
 
@@ -52,6 +53,7 @@
                     <!-- Rooms -->
                     <input class="form-control form-control-lg disabled" type="text" placeholder="ChatRoomName">
                     <button type="button" class="btn btn-info rightButton disabled">Create Chat Room</button>
+                    <br><br><br>
                     <select size="5" style="width: 100%;" class="form-select disabled" multiple>
                     <option value="1">Rooms</option>
                 </select>
@@ -61,9 +63,28 @@
                     <a href="" class="list-group-item list-group-item-action users" aria-current="true">Cras justo odio</a>
                 </div>
                 </div>
-
+                <!-- Messages -->
+                <div class="col-md-6">
+                    <textarea class="form-control" style="margin-top: 5px;" placeholder="Messsage.." rows="3"></textarea>
+                    <button type="button" class="btn btn-light rightButton" id="btnGonder">Send</button>
+                    <br><br><br>
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action " aria-current="true">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">John</h5>
+                                <h5 class="mb-1">Tedy</h5>
+                            </div>
+                            <p class="mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, modi necessitatibus ut deleniti non error?</p>
+                            <small>Lorem ipsum dolor sit amet.</small>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control form-control-lg" type="text" placeholder="Nick" id="txtNickName">
+                    <button type="button" class="btn btn-success leftButton" id="btnGirisYap">Login</button>
+                </div>
             </div>
         </div>
     </div>
-
+</div>
 </html>
